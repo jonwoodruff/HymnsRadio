@@ -17,17 +17,21 @@ package com.example.exoplayer
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
+import android.webkit.WebView
+import android.widget.TextView
 import androidx.annotation.OptIn
-import androidx.media3.session.MediaSession
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.util.Log
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.MediaSession
 import com.example.exoplayer.databinding.ActivityPlayerBinding
 
 
@@ -59,7 +63,7 @@ class PlayerActivity : AppCompatActivity() {
             .build()
             .also { exoPlayer ->
                 viewBinding.videoView.player = exoPlayer
-                val mediaItem = MediaItem.fromUri("http://listen.hymnsradio.com:8006")
+                val mediaItem = MediaItem.fromUri(getString(R.string.media_url_mp3))
                 exoPlayer.setMediaItems(listOf(mediaItem), mediaItemIndex, playbackPosition)
                 exoPlayer.playWhenReady = playWhenReady
                 exoPlayer.addListener(playbackStateListener)
@@ -102,6 +106,21 @@ class PlayerActivity : AppCompatActivity() {
                 else -> "UNKNOWN_STATE             -"
             }
             Log.d(TAG, "changed state to $stateString")
+        }
+
+        @OptIn(UnstableApi::class) override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
+            if (mediaMetadata.title != null) {
+                val regex = """\D+(\D)(\d+) - (.*)""".toRegex()
+                val matchResult = if (regex.find(mediaMetadata.title.toString()) != null) regex.find(mediaMetadata.title.toString()) else throw NullPointerException("Expression 'regex.find(mediaMetadata.title.toString())' must not be null")
+                if (matchResult != null) {
+                    val (hymnType, hymnNum, hymnTitle) = matchResult.destructured
+                    val typeCode = if (hymnType == "N") "ns" else "h"
+                    val textView = findViewById<View>(R.id.title_text) as TextView
+                    textView.text = hymnTitle //set text for text view
+                    val myWebView: WebView = findViewById(R.id.web_view)
+                    myWebView.loadUrl("https://www.hymnal.net/en/hymn/" + typeCode + "/" + hymnNum)
+                }
+            }
         }
     }
 }

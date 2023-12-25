@@ -17,6 +17,8 @@ limitations under the License. -->
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="fontFamily">serif</item>
     <item name="android:windowBackground">@null</item>
   </style>
 
