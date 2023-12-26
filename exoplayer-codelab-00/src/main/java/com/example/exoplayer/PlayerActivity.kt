@@ -60,6 +60,9 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
         initializePlayer()
+        val myWebView: WebView = findViewById(R.id.web_view)
+        myWebView.settings.javaScriptEnabled = true
+        myWebView.settings.domStorageEnabled = true
     }
 
     private fun initializePlayer() {
@@ -126,7 +129,11 @@ class PlayerActivity : AppCompatActivity() {
                     val textView = findViewById<View>(R.id.title_text) as TextView
                     textView.text = hymnTitle //set text for text view
                     val myWebView: WebView = findViewById(R.id.web_view)
-                    myWebView.loadUrl("https://www.hymnal.net/en/hymn/" + typeCode + "/" + hymnNum + "#fb-root")
+                    if (typeCode == "h") {
+                        myWebView.loadUrl("https://songbase.life/english_hymnal/" + hymnNum)
+                    } else {
+                        myWebView.loadUrl("https://www.hymnal.net/en/hymn/" + typeCode + "/" + hymnNum + "#fb-root")
+                    }
                 }
             }
         }
