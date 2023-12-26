@@ -16,6 +16,7 @@
 package com.example.exoplayer
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.media3.common.C.WAKE_MODE_NETWORK
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
@@ -47,6 +49,8 @@ class PlayerActivity : AppCompatActivity() {
     private var playbackPosition = 0L
     private val playbackStateListener: Player.Listener = playbackStateListener()
     private var mediaSession: MediaSession? = null
+    private val m_activity: Activity? = null
+
 
     private val viewBinding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityPlayerBinding.inflate(layoutInflater)
@@ -66,6 +70,7 @@ class PlayerActivity : AppCompatActivity() {
                 val mediaItem = MediaItem.fromUri(getString(R.string.media_url_mp3))
                 exoPlayer.setMediaItems(listOf(mediaItem), mediaItemIndex, playbackPosition)
                 exoPlayer.playWhenReady = playWhenReady
+                exoPlayer.setWakeMode(WAKE_MODE_NETWORK)
                 exoPlayer.addListener(playbackStateListener)
                 exoPlayer.prepare()
             }
@@ -109,16 +114,19 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         @OptIn(UnstableApi::class) override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
-            if (mediaMetadata.title != null) {
+            if (mediaMetadata.title != null && m_activity?.hasWindowFocus() != false) {
                 val regex = """\D+(\D)(\d+) - (.*)""".toRegex()
-                val matchResult = if (regex.find(mediaMetadata.title.toString()) != null) regex.find(mediaMetadata.title.toString()) else throw NullPointerException("Expression 'regex.find(mediaMetadata.title.toString())' must not be null")
+                var matchResult: MatchResult? = null
+                if (regex.find(mediaMetadata.title.toString()) != null) {
+                    matchResult = regex.find(mediaMetadata.title.toString())
+                }  //else throw NullPointerException("Expression 'regex.find(mediaMetadata.title.toString())' must not be null")
                 if (matchResult != null) {
                     val (hymnType, hymnNum, hymnTitle) = matchResult.destructured
                     val typeCode = if (hymnType == "N") "ns" else "h"
                     val textView = findViewById<View>(R.id.title_text) as TextView
                     textView.text = hymnTitle //set text for text view
                     val myWebView: WebView = findViewById(R.id.web_view)
-                    myWebView.loadUrl("https://www.hymnal.net/en/hymn/" + typeCode + "/" + hymnNum)
+                    myWebView.loadUrl("https://www.hymnal.net/en/hymn/" + typeCode + "/" + hymnNum + "#fb-root")
                 }
             }
         }

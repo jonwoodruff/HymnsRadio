@@ -13,15 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#000000">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/hymnsradiologoextended"
-        />
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,9 +24,10 @@ limitations under the License. -->
         <TextView android:id="@+id/title_text"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:text="Title"
-            android:textSize="30sp"
-            android:gravity="center"/>
+            android:textSize="24sp"
+            android:gravity="center"
+            android:background="@android:color/background_dark"
+            android:textAppearance="@android:style/TextAppearance.Material.Headline"/>
 
         <WebView android:id="@+id/web_view"
             android:layout_width="match_parent"
