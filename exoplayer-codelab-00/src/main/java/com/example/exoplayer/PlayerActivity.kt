@@ -63,6 +63,7 @@ class PlayerActivity : AppCompatActivity() {
         val myWebView: WebView = findViewById(R.id.web_view)
         myWebView.settings.javaScriptEnabled = true
         myWebView.settings.domStorageEnabled = true
+        myWebView.loadUrl("file:///android_asset/img.html")
     }
 
     private fun initializePlayer() {
@@ -128,12 +129,12 @@ class PlayerActivity : AppCompatActivity() {
                     val typeCode = if (hymnType == "N") "ns" else "h"
                     val textView = findViewById<View>(R.id.title_text) as TextView
                     textView.text = hymnTitle //set text for text view
-                    val myWebView: WebView = findViewById(R.id.web_view)
-                    if (typeCode == "h") {
-                        myWebView.loadUrl("https://songbase.life/english_hymnal/" + hymnNum)
-                    } else {
-                        myWebView.loadUrl("https://www.hymnal.net/en/hymn/" + typeCode + "/" + hymnNum + "#fb-root")
-                    }
+                    //val myWebView: WebView = findViewById(R.id.web_view)
+                    //if (typeCode == "h") {
+                    //    myWebView.loadUrl("https://songbase.life/english_hymnal/" + hymnNum)
+                    //} else {
+                    //    myWebView.loadUrl("https://www.hymnal.net/en/hymn/" + typeCode + "/" + hymnNum + "#fb-root")
+                    //}
                 }
             }
         }

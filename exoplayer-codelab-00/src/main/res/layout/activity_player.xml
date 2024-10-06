@@ -21,24 +21,50 @@ limitations under the License. -->
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:orientation="vertical" >
+
+        <WebView android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:gravity="center_horizontal"/>
+
         <TextView android:id="@+id/title_text"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:textSize="24sp"
             android:gravity="center"
-            android:background="@android:color/background_dark"
-            android:textAppearance="@android:style/TextAppearance.Material.Headline"/>
+            android:background="@android:color/background_dark"/>
 
-        <WebView android:id="@+id/web_view"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center_horizontal"/>
     </LinearLayout>
 
-    <androidx.media3.ui.PlayerView
-        android:id="@+id/video_view"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_gravity="bottom"/>
+        android:orientation="horizontal"
+        android:layout_gravity="bottom" >
+
+        <Button
+            android:id="@+id/button_info"
+            android:layout_height="70dp"
+            android:layout_width="70dp"
+            android:background="@android:color/background_dark"
+            android:textSize="35sp"
+            android:text="ℹ️" />
+
+        <androidx.media3.ui.PlayerView
+            android:id="@+id/video_view"
+            android:layout_width="270dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/button_lyrics"
+            android:layout_height="70dp"
+            android:layout_width="70dp"
+            android:layout_gravity="right"
+            android:background="@android:color/background_dark"
+            android:textSize="35sp"
+            android:text="📖" />
+
+    </LinearLayout>
 
 </FrameLayout>
