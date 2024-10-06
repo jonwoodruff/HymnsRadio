@@ -20,6 +20,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
@@ -36,7 +37,6 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import com.example.exoplayer.databinding.ActivityPlayerBinding
 
-
 private const val TAG = "PlayerActivity"
 
 /**
@@ -50,6 +50,7 @@ class PlayerActivity : AppCompatActivity() {
     private val playbackStateListener: Player.Listener = playbackStateListener()
     private var mediaSession: MediaSession? = null
     private val m_activity: Activity? = null
+    private var lyrics_url: String = "file:///android_asset/img.html"
 
 
     private val viewBinding by lazy(LazyThreadSafetyMode.NONE) {
@@ -64,6 +65,36 @@ class PlayerActivity : AppCompatActivity() {
         myWebView.settings.javaScriptEnabled = true
         myWebView.settings.domStorageEnabled = true
         myWebView.loadUrl("file:///android_asset/img.html")
+
+        val button_info = findViewById<Button>(R.id.button_info)
+        button_info.setOnClickListener {
+            // Create the object of AlertDialog Builder class
+            val builder = android.app.AlertDialog.Builder(this)
+
+            // Set the message show for the Alert time
+            builder.setMessage("Hymns Radio is an online radio station whose goal is to provide listeners with continuous access to hymns that are rich in Biblical truth, high quality, and enjoyable.\n" +
+                    "\n" +
+                    "Hymns Radio was started by a group of Christians who love the Lord Jesus and who appreciate the riches contained in hymns written by the Lord’s loving seekers.\n" +
+                    "\n" +
+                    "If you have any questions or comments, please contact us.\n" +
+                    "\n" +
+                    "info@hymnsradio.com")
+
+            // Set Alert Title
+            builder.setTitle("About Us")
+
+            // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+            builder.setCancelable(true)
+            // Create the Alert dialog
+            val alertDialog: android.app.AlertDialog = builder.create()
+            // Show the Alert Dialog box
+            alertDialog.show()
+        }
+
+        val button_lyrics = findViewById<Button>(R.id.button_lyrics)
+        button_lyrics.setOnClickListener {
+            myWebView.loadUrl(lyrics_url)
+        }
     }
 
     private fun initializePlayer() {
@@ -129,12 +160,12 @@ class PlayerActivity : AppCompatActivity() {
                     val typeCode = if (hymnType == "N") "ns" else "h"
                     val textView = findViewById<View>(R.id.title_text) as TextView
                     textView.text = hymnTitle //set text for text view
-                    //val myWebView: WebView = findViewById(R.id.web_view)
-                    //if (typeCode == "h") {
-                    //    myWebView.loadUrl("https://songbase.life/english_hymnal/" + hymnNum)
-                    //} else {
-                    //    myWebView.loadUrl("https://www.hymnal.net/en/hymn/" + typeCode + "/" + hymnNum + "#fb-root")
-                    //}
+                    val myWebView: WebView = findViewById(R.id.web_view)
+                    if (typeCode == "h") {
+                        lyrics_url = ("https://songbase.life/english_hymnal/" + hymnNum)
+                    } else {
+                        lyrics_url = ("https://www.hymnal.net/en/hymn/" + typeCode + "/" + hymnNum + "#fb-root")
+                    }
                 }
             }
         }
