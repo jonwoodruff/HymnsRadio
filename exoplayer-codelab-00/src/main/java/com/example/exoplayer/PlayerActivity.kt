@@ -17,6 +17,8 @@ package com.example.exoplayer
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
@@ -36,6 +38,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import com.example.exoplayer.databinding.ActivityPlayerBinding
+
 
 private const val TAG = "PlayerActivity"
 
@@ -93,7 +96,9 @@ class PlayerActivity : AppCompatActivity() {
 
         val button_lyrics = findViewById<Button>(R.id.button_lyrics)
         button_lyrics.setOnClickListener {
-            myWebView.loadUrl(lyrics_url)
+            //myWebView.loadUrl(lyrics_url)
+            val myIntent = Intent(Intent.ACTION_VIEW, Uri.parse(lyrics_url))
+            startActivity(myIntent)
         }
     }
 
