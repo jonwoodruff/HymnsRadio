@@ -167,7 +167,8 @@ class PlayerActivity : AppCompatActivity() {
                     textView.text = hymnTitle //set text for text view
                     val myWebView: WebView = findViewById(R.id.web_view)
                     if (typeCode == "h") {
-                        lyrics_url = ("https://songbase.life/english_hymnal/" + hymnNum)
+                        //lyrics_url = ("https://songbase.life/english_hymnal/" + hymnNum)
+                        lyrics_url = ("https://www.hymnal.net/en/hymn/" + typeCode + "/" + hymnNum + "#fb-root")
                     } else {
                         lyrics_url = ("https://www.hymnal.net/en/hymn/" + typeCode + "/" + hymnNum + "#fb-root")
                     }
