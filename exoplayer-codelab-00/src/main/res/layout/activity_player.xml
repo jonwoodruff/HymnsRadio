@@ -37,12 +37,6 @@ limitations under the License. -->
             android:gravity="center"
             android:background="@android:color/background_dark"/>
 
-        <androidx.media3.ui.PlayerView
-            android:id="@+id/video_view"
-            android:layout_width="270dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center_horizontal"/>
-
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -59,10 +53,12 @@ limitations under the License. -->
             android:background="@android:color/background_dark"
             android:textSize="35sp"
             android:text="ℹ️" />
-        <Space
+
+        <androidx.media3.ui.PlayerView
+            android:id="@+id/video_view"
+            android:layout_width="270dp"
             android:layout_height="70dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_gravity="center_horizontal"/>
         <Button
             android:id="@+id/button_lyrics"
             android:layout_height="70dp"

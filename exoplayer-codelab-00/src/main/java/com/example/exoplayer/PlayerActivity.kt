@@ -115,7 +115,7 @@ class PlayerActivity : AppCompatActivity() {
                 exoPlayer.prepare()
             }
         if (mediaSession != null) {
-            mediaSession = null;
+            mediaSession = null
         }
         mediaSession = MediaSession.Builder(this, player).build()
     }
