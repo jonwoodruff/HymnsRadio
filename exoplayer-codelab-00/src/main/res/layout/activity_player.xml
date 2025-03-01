@@ -24,6 +24,10 @@ limitations under the License. -->
         android:paddingRight="16dp"
         android:orientation="vertical" >
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="100dp"/>
+
         <WebView android:id="@+id/web_view"
             android:layout_width="match_parent"
             android:layout_height="400dp"
@@ -58,7 +62,9 @@ limitations under the License. -->
             android:id="@+id/video_view"
             android:layout_width="270dp"
             android:layout_height="70dp"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+             />
+
         <Button
             android:id="@+id/button_lyrics"
             android:layout_height="70dp"

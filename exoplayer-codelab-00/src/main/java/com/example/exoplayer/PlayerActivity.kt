@@ -102,6 +102,7 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
+    @OptIn(UnstableApi::class)
     private fun initializePlayer() {
         val player = ExoPlayer.Builder(this)
             .build()
@@ -111,6 +112,8 @@ class PlayerActivity : AppCompatActivity() {
                 exoPlayer.setMediaItems(listOf(mediaItem), mediaItemIndex, playbackPosition)
                 exoPlayer.playWhenReady = playWhenReady
                 exoPlayer.setWakeMode(WAKE_MODE_NETWORK)
+                viewBinding.videoView.controllerHideOnTouch = false
+                viewBinding.videoView.controllerShowTimeoutMs = 0
                 exoPlayer.addListener(playbackStateListener)
                 exoPlayer.prepare()
             }
