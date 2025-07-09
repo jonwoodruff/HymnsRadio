@@ -15,32 +15,30 @@
  */
 package com.example.exoplayer
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.webkit.WebView
-import android.widget.Button
-import android.widget.TextView
-import androidx.annotation.OptIn
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
-import androidx.media3.common.C.WAKE_MODE_NETWORK
-import androidx.media3.common.MediaItem
-import androidx.media3.common.MediaMetadata
-import androidx.media3.common.Player
-import androidx.media3.common.util.Log
-import androidx.media3.common.util.UnstableApi
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.session.MediaSession
 import com.example.exoplayer.databinding.ActivityPlayerBinding
 
 
 private const val TAG = "PlayerActivity"
+
+
+private class HelloWebViewClient : WebViewClient() {
+    override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+        view.loadUrl(url)
+        return true
+    }
+
+    override fun onLoadResource(view: WebView?, url: String) {
+        if (url == "http://redirectexample.com") {
+            //do your own thing here
+        } else {
+            super.onLoadResource(view, url)
+        }
+    }
+}
 
 /**
  * A fullscreen activity to play audio or video streams.
@@ -55,7 +53,7 @@ class PlayerActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
         val myWebView: WebView = findViewById(R.id.web_view)
         myWebView.settings.javaScriptEnabled = true
-        myWebView.settings.domStorageEnabled = true
+        //myWebView.settings.domStorageEnabled = true
         myWebView.loadUrl("https://webapp.hymnsradio.com/")
     }
 }
