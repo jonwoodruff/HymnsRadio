@@ -15,25 +15,47 @@
  */
 package com.example.exoplayer
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.example.exoplayer.databinding.ActivityPlayerBinding
 
-
 private const val TAG = "PlayerActivity"
 
-
-private class HelloWebViewClient : WebViewClient() {
+private class MyWebViewClient : WebViewClient() {
+    fun openLink(view: WebView, url: String) {
+        var urlWithHttp = url
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            urlWithHttp = "http://$url"
+        }
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(urlWithHttp))
+        try {
+            view.context.startActivity(browserIntent)
+        } catch (e: Exception) {
+            // Handle the case where no suitable activity is found
+            println("No suitable activity found to handle the URL")
+            // Potentially display an error message to the user
+        }
+    }
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-        view.loadUrl(url)
+        val regex = "hymnal.net".toRegex()
+        if (regex.containsMatchIn(url)) {
+            openLink(view, url)
+        } else {
+            view.loadUrl(url)
+        }
         return true
     }
 
     override fun onLoadResource(view: WebView?, url: String) {
-        if (url == "http://redirectexample.com") {
-            //do your own thing here
+        val regex = "hymnal.net".toRegex()
+        if (regex.containsMatchIn(url)) {
+            if (view != null) {
+                openLink(view, url)
+            }
         } else {
             super.onLoadResource(view, url)
         }
@@ -52,6 +74,7 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
         val myWebView: WebView = findViewById(R.id.web_view)
+        myWebView.webViewClient = MyWebViewClient()
         myWebView.settings.javaScriptEnabled = true
         //myWebView.settings.domStorageEnabled = true
         myWebView.loadUrl("https://webapp.hymnsradio.com/")
